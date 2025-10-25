@@ -1,47 +1,37 @@
-import { Bluetooth, Wifi, WifiOff, FlaskConical } from 'lucide-react';
-import { ConnectionStatus as Status, ConnectionType } from '@/hooks/useDeviceConnection';
+import { Bluetooth, WifiOff, FlaskConical } from 'lucide-react';
+import { ConnectionStatus as Status } from '@/hooks/useBluetooth';
 
 interface ConnectionStatusProps {
   status: Status;
-  connectionType: ConnectionType | null;
 }
 
-export const ConnectionStatus = ({ status, connectionType }: ConnectionStatusProps) => {
+export const ConnectionStatus = ({ status }: ConnectionStatusProps) => {
   const getStatusConfig = () => {
     if (status === 'connected') {
-      if (connectionType === 'bluetooth') {
-        return {
-          icon: Bluetooth,
-          text: 'Connecté (Bluetooth)',
-          color: 'text-green-400',
-          bgColor: 'bg-green-500/20',
-          borderColor: 'border-green-500/50',
-          glowClass: 'shadow-[0_0_15px_rgba(34,197,94,0.5)]'
-        };
-      } else if (connectionType === 'wifi') {
-        return {
-          icon: Wifi,
-          text: 'Connecté (WiFi)',
-          color: 'text-green-400',
-          bgColor: 'bg-green-500/20',
-          borderColor: 'border-green-500/50',
-          glowClass: 'shadow-[0_0_15px_rgba(34,197,94,0.5)]'
-        };
-      } else if (connectionType === 'demo') {
-        return {
-          icon: FlaskConical,
-          text: 'Mode Démo',
-          color: 'text-purple-400',
-          bgColor: 'bg-purple-500/20',
-          borderColor: 'border-purple-500/50',
-          glowClass: 'shadow-[0_0_15px_rgba(168,85,247,0.5)]'
-        };
-      }
+      return {
+        icon: Bluetooth,
+        text: 'Connecté (Bluetooth)',
+        color: 'text-green-400',
+        bgColor: 'bg-green-500/20',
+        borderColor: 'border-green-500/50',
+        glowClass: 'shadow-[0_0_15px_rgba(34,197,94,0.5)]'
+      };
+    }
+    
+    if (status === 'demo') {
+      return {
+        icon: FlaskConical,
+        text: 'Mode Démo',
+        color: 'text-purple-400',
+        bgColor: 'bg-purple-500/20',
+        borderColor: 'border-purple-500/50',
+        glowClass: 'shadow-[0_0_15px_rgba(168,85,247,0.5)]'
+      };
     }
     
     if (status === 'connecting') {
       return {
-        icon: Wifi,
+        icon: Bluetooth,
         text: 'Connexion...',
         color: 'text-yellow-400',
         bgColor: 'bg-yellow-500/20',

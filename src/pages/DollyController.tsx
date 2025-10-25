@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useDeviceConnection } from '@/hooks/useDeviceConnection';
-import { ConnectionManager } from '@/components/dolly/ConnectionManager';
+import { useBluetooth } from '@/hooks/useBluetooth';
+import { BluetoothManager } from '@/components/dolly/BluetoothManager';
 import { ConnectionStatus } from '@/components/dolly/ConnectionStatus';
 import { DirectionControls } from '@/components/dolly/DirectionControls';
 import { SpeedControl } from '@/components/dolly/SpeedControl';
@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 const STORAGE_KEY = 'dolly-presets';
 
 export default function DollyController() {
-  const { status, connectionType, connect, disconnect, sendCommand } = useDeviceConnection();
+  const { status, connect, disconnect, sendCommand, enableDemoMode } = useBluetooth();
   
   const [speed, setSpeed] = useState(50);
   const [direction, setDirection] = useState<'forward' | 'reverse' | null>(null);
@@ -149,7 +149,7 @@ export default function DollyController() {
     toast.success(`Preset "${preset.name}" appliqué`);
   };
 
-  const isConnected = status === 'connected';
+  const isConnected = status === 'connected' || status === 'demo';
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -168,13 +168,13 @@ export default function DollyController() {
         </header>
 
         <div className="space-y-6">
-          <ConnectionStatus status={status} connectionType={connectionType} />
+          <ConnectionStatus status={status} />
           
-          <ConnectionManager
+          <BluetoothManager
             status={status}
-            connectionType={connectionType}
             onConnect={connect}
             onDisconnect={disconnect}
+            onEnableDemo={enableDemoMode}
           />
 
           <div className="grid lg:grid-cols-2 gap-6">
