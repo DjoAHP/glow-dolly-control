@@ -69,6 +69,10 @@ All colors MUST be HSL.
     box-shadow: var(--glow-destructive);
   }
 
+  .glow-purple {
+    box-shadow: 0 0 20px hsl(271 91% 65% / 0.5), 0 0 40px hsl(271 91% 65% / 0.3);
+  }
+
   .shimmer {
     background: linear-gradient(90deg, transparent, hsl(186 100% 50% / 0.2), transparent);
     background-size: 200% 100%;
